@@ -40,3 +40,9 @@ writeFileSync('afterlit/privacy.html', page);
 writeFileSync('afterlit/support.html', build('../fitil/legal/support.md', 'Afterlit – Destek / Support'));
 writeFileSync('index.html', '<!doctype html><meta charset="utf-8"><title>Apps</title><p><a href="afterlit/privacy.html">Afterlit – Privacy Policy</a></p><p><a href="afterlit/support.html">Afterlit – Support</a></p>\n');
 console.log('built', page.length, 'bytes');
+// Starbane (kaynak: D:/Projeler/starbane/Store/legal/*.md)
+import { mkdirSync } from 'node:fs';
+mkdirSync('starbane', { recursive: true });
+const sb = (f, t) => build(f, t).replace('--bg:#4a1029', '--bg:#0d1430').replace('--accent:#ff3d6e', '--accent:#3a7dff');
+writeFileSync('starbane/privacy.html', sb('D:/Projeler/starbane/Store/legal/privacy.md', 'Starbane – Gizlilik Politikası / Privacy Policy'));
+writeFileSync('starbane/support.html', sb('D:/Projeler/starbane/Store/legal/support.md', 'Starbane – Destek / Support'));

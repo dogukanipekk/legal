@@ -15,9 +15,11 @@ function html(src) {
   }
   return out + (list ? '</ul>' : '');
 }
-const page = `<!doctype html>
+function build(mdFile, title) {
+const [tr, en] = readFileSync(mdFile, 'utf8').split(/\n---\n/);
+return `<!doctype html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Afterlit – Gizlilik Politikası / Privacy Policy</title>
+<title>${title}</title>
 <style>
 :root{--bg:#4a1029;--card:#fff;--ink:#2a1020;--muted:#8b7080;--accent:#ff3d6e}
 body{margin:0;background:var(--bg);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink)}
@@ -32,6 +34,9 @@ p,li{color:#3a2430}a{color:var(--accent)}
 <main><section class="card" id="tr" lang="tr">${html(tr)}</section><section class="card" id="en" lang="en">${html(en)}</section></main>
 </body></html>
 `;
+}
+const page = build('../fitil/legal/privacy-policy.md', 'Afterlit – Gizlilik Politikası / Privacy Policy');
 writeFileSync('afterlit/privacy.html', page);
-writeFileSync('index.html', '<!doctype html><meta charset="utf-8"><title>Apps</title><p><a href="afterlit/privacy.html">Afterlit – Privacy Policy</a></p>\n');
+writeFileSync('afterlit/support.html', build('../fitil/legal/support.md', 'Afterlit – Destek / Support'));
+writeFileSync('index.html', '<!doctype html><meta charset="utf-8"><title>Apps</title><p><a href="afterlit/privacy.html">Afterlit – Privacy Policy</a></p><p><a href="afterlit/support.html">Afterlit – Support</a></p>\n');
 console.log('built', page.length, 'bytes');
